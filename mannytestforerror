@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Main Stack for SQS'
+Parameters:
+  QueueName:
+    Type: String
+  DelaySeconds:
+    Type: Number
+  Increment:
+    Type: Number
+  Environment:
+    Type: String
+  MaximumMessageSize:
+    Type: Number
+  MessageRetentionPeriod:
+    Type: Number
+  ReceiveMessageWaitTimeSeconds:
+    Type: Number
+  VisibilityTimeout:
+    Type: Number
+  KmsMasterKeyId:
+    Type: String
+  KmsDataKeyReusePeriodSeconds:
+    Type: Number 
+  ProjectNameTag:
+    Type: String
+  TeamNameTag:
+    Type: String
+  TeamLeadTag:
+    Type: String
+  ServiceOwnerTag:
+    Type: String
+  BusinessUnitTag:
+    Type: String
+  CIDataOwnerTag:
+    Type: String
+  ServiceNameTag:
+    Type: String
+  ApplicationPortfolioTag:
+    Type: String
+  SubPortfolioTag:
+    Type: String
+  CustomTagKey1: 
+    Type: String
+  CustomTagValue1: 
+    Type: String
+  CustomTagKey2: 
+    Type: String
+  CustomTagValue2: 
+    Type: String
+  CustomTagKey3: 
+    Type: String
+  CustomTagValue3: 
+    Type: String
+
+Resources:
+  SQSStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: "https://somelocation.com/sqs/latest/main.yaml"
+      Parameters:
+        QueueName: !Ref QueueName
+        DelaySeconds: !Ref DelaySeconds
+        Increment: !Ref Increment
+        Environment: !Ref Environment
+        MaximumMessageSize: !Ref MaximumMessageSize
+        MessageRetentionPeriod: !Ref MessageRetentionPeriod
+        ReceiveMessageWaitTimeSeconds: !Ref ReceiveMessageWaitTimeSeconds
+        VisibilityTimeout: !Ref VisibilityTimeout
+        KmsMasterKeyId: !Ref KmsMasterKeyId
+        KmsDataKeyReusePeriodSeconds: !Ref KmsDataKeyReusePeriodSeconds
+        ProjectNameTag: !Ref ProjectNameTag
+        TeamNameTag: !Ref TeamNameTag
+        TeamLeadTag: !Ref TeamLeadTag
+        ServiceOwnerTag: !Ref ServiceOwnerTag
+        BusinessUnitTag: !Ref BusinessUnitTag
+        CIDataOwnerTag: !Ref CIDataOwnerTag
+        ServiceNameTag: !Ref ServiceNameTag
+        ApplicationPortfolioTag: !Ref ApplicationPortfolioTag
+        SubPortfolioTag: !Ref SubPortfolioTag
+        CustomTagKey1: !Ref CustomTagKey1
+        CustomTagValue1: !Ref CustomTagValue1
+        CustomTagKey2: !Ref CustomTagKey2
+        CustomTagValue2: !Ref CustomTagValue2
+        CustomTagKey3: !Ref CustomTagKey3
+        CustomTagValue3: !Ref CustomTagValue3
+

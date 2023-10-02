@@ -1,0 +1,1027 @@
+openapi: 3.0.3
+info:
+  title: Dealer Master Data API
+  description: >
+    This API contains mappings between the different IDs that Dealers have in different systems. 
+    In addition it contains information regarding to the dealer migration state, since dealers can be in either 
+    MNET or Dynamics 365 on a domain level.
+  contact:
+    name: Integration team
+    email: integration@moller.no
+  version: "0.0"
+tags:
+  - name: dealers
+    description: Endpoints to retrieve dealers plural.
+  - name: dealer
+    description: Endpoints to retrieve dealer singular.
+security:
+  - Dev: []
+  - Test: []
+  - Stage: []
+servers:
+  - url: https://dealer-master-data-api.{environment}.mollercloud.no/v0
+    variables:
+      environment:
+        description: >
+          Supported environments of the Dealer Master Data API
+        enum:
+          - dev
+          - test
+          - stage
+        default: dev
+paths:
+  /dealers:
+    summary: Get a list of all dealers
+    description: Get a list of all dealers, ID mappings and migration states. The returned content can either be in JSON or CSV format.
+    get:
+      parameters:
+        - in: query
+          name: country_code
+          schema:
+            $ref: "#/components/schemas/country_code_filter"
+          description: >
+            Filter `Dealers` by `Country Code`  
+            Returns all `Dealers` in the specified `Country`
+        - in: query
+          name: brand.name
+          schema:
+            $ref: "#/components/schemas/brand_name_filter"
+          description: >
+            `Brand` names on the official form  
+            Returns all `Dealers` with contracts on the specified `Brand`  
+            `Cupra` is a special case, as it's represented by `Seat` in the `KVPS` data,
+            and will therefore return all `Dealers` that are certified for `Seat`
+        - in: query
+          name: brand.certifications
+          schema:
+            type: array
+            minItems: 1
+            maxItems: 3
+            items:
+              $ref: "#/components/schemas/brand_certifications_filter"
+          style: form
+          explode: false
+          description: >
+            Comma-separated list of a `Dealer's` `Certifications`
+            Returns all `Dealers` that have the specified certification(s) on any of its `Brands`  
+            Multiple inputs will only return `Dealers` that have every certification provided in the query on any of its `Brands`  
+            Can be combined with `Brand Name` to return all `Dealers` 
+            that have that set of certifications for a specific `Brand`
+        - in: query
+          name: migration.d365.after_sales
+          schema:
+            $ref: "#/components/schemas/migration_365_after_sales_filter"
+          description: >
+            An input of `true` returns all `Dealers` which have migrated to D365 for `After Sales`
+      operationId: list_dealers
+      summary: Get a list of all dealers
+      description: >
+        Get a list of all `Dealers`, `ID` mappings and `System Migration States`  
+        In addition, these objects contain structured `OEM` information on `Brand` certifications  
+        The returned content can only be in `JSON` format  
+        See example response for details
+      tags:
+        - dealers
+      responses:
+        200:
+          description: >
+            All `Dealers` existing in all systems retrieved
+          headers:
+            cache-control:
+              description: As defined in RFC7234
+              schema:
+                $ref: '#/components/schemas/cache_control_header'
+            content-type:
+              schema:
+                $ref: '#/components/schemas/csv_header'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/dealers_response"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        401:
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        403:
+          description: Insufficient privileges
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /dealer_maps:
+    summary: Get a list of all dealers
+    description: Get a list of all dealers with ID mapping and migration states in CSV format.
+    get:
+      operationId: list_dealers_csv
+      summary: Get a list of all dealers as CSV
+      description: >
+        Get a list of all `Dealers`, `ID` mappings and `System Migration States`  
+        The returned content can only be in `CSV` format  
+        See example response for details
+      tags:
+        - dealers
+      responses:
+        200:
+          description: >
+            All `Dealers` existing in all systems
+          headers:
+            cache-control:
+              description: As defined in RFC7234
+              schema:
+                $ref: '#/components/schemas/cache_control_header'
+            content-type:
+              schema:
+                $ref: '#/components/schemas/csv_header'
+          content:
+            text/csv:
+              examples:
+                All:
+                  description: >
+                    CSV formatted response using UTF-8 encoding.
+                    Fields returned:
+                      - Dealer Market Name
+                      - Legal Entity ID
+                      - MNET ID
+                      - D365 ID
+                      - OEM Dealer ID
+                      - Country code in ISO 3166 alpha 3 format
+                      - Indicates if after sales is handled in Dynamics 365
+                      - Indicates if sales is handled in Dynamics 365
+                      - Indicates if after sales is handled in MNET
+                      - Indicates if sales is handled in MNET
+                    The returned content uses the following CSV format:
+                      - Separator: \n
+                      - Delimiter: ;
+                      - Encapsulator: "
+                      - Encoding: UTF-8
+                  value: "D365Sales;D365AfterSales;MnetSales;MnetAfterSales;MarketName;LegalEntity;D365Id;MnetId;OemDealerId;CountryCode\nFalse;False;True;True;\"Møller Bil Hvam\";N550;1550;550;00550;NOR\nFalse;False;True;True;\"Møller Bil Ryen\";N020;1020;020;00020;NOR\nFalse;False;True;True;\"Møller Bil Ensjø\";N030;1030;030;00030;NOR"
+              schema:
+                $ref: '#/components/schemas/dealer_maps_response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        401:
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        403:
+          description: Insufficient privileges
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /mnet_dealer/{mnet_id}:
+    summary: Returns a dealer by MNET ID
+    description: Returns a dealer by MNET ID, with related ID mappings and migration state
+    get:
+      operationId: get_dealer_by_mnet
+      summary: Get dealer by MNET ID
+      description: >
+        Get a `Dealer` by `MNET ID`, with `ID` mappings and `System Migration States`  
+        In addition, the object contains structured `OEM` information on `Brand` certifications  
+        The returned content can only be in `JSON` format  
+        See example response for details
+      tags:
+        - dealer
+      parameters:
+        - name: mnet_id
+          in: path
+          description: MNET ID
+          required: true
+          schema:
+            $ref: '#/components/schemas/mnet_id'
+      responses:
+        200:
+          description: >
+            `Dealer` successfully retrieved by `MNET ID` lookup
+          headers:
+            cache-control:
+              description: As defined in RFC7234
+              schema:
+                $ref: '#/components/schemas/cache_control_header'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/dealer"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        401:
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        403:
+          description: Insufficient privileges
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /d365_dealer/{d365_id}:
+    summary: Returns a dealer by D365 ID
+    description: >
+      Returns a dealer by `D365 ID`, with related ID mappings and migration state
+    get:
+      operationId: get_dealer_by_d365
+      summary: Get dealer by D365 ID
+      description: >
+        Get a `Dealer` by `D365 ID`, with `ID` mappings and `System Migration States`
+        In addition, the object contains structured `OEM` information on `Brand` certifications  
+        The returned content can only be in `JSON` format  
+        See example response for details
+      tags:
+        - dealer
+      parameters:
+        - name: d365_id
+          in: path
+          description: Dynamics 365 ID
+          required: true
+          schema:
+            $ref: '#/components/schemas/d365_id'
+      responses:
+        200:
+          description: >
+            `Dealer` successfully retrieved by `D365 ID` lookup
+          headers:
+            cache-control:
+              description: As defined in RFC7234
+              schema:
+                $ref: '#/components/schemas/cache_control_header'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/dealer"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        401:
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        403:
+          description: Insufficient privileges
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /oem_dealer/{oem_dealer_id}:
+    summary: Returns a dealer by OEM Dealer ID
+    description: >
+      Returns a dealer by `OEM Dealer ID`, with `ID` mappings and `System Migration States`
+    get:
+      operationId: get_dealer_by_oem
+      summary: Get Dealer by OEM Dealer ID
+      description: >
+        Get a `Dealer` by `OEM Dealer ID`, with `ID` mappings and `System Migration States`  
+        In addition, the object contains structured `OEM` information on `Brand` certifications  
+        The returned content can only be in `JSON` format  
+        See example response for details
+      tags:
+        - dealer
+      parameters:
+        - name: oem_dealer_id
+          description: OEM ID
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/oem_dealer_id'
+      responses:
+        200:
+          description: >
+            `Dealer` successfully retrieved by `OEM Dealer ID` lookup
+          headers:
+            cache-control:
+              description: As defined in RFC7234
+              schema:
+                $ref: '#/components/schemas/cache_control_header'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dealer'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        401:
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        403:
+          description: Insufficient privileges
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+components:
+  securitySchemes:
+    Dev:
+      type: oauth2
+      description: Security scheme for dev environment. This API uses OAuth 2 with the client credential grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://id-dev.mollermobilitygroup.com
+          scopes: {}
+      x-audience:
+        - name: audience
+          in: body
+          description: The audience for the access token.
+          required: true
+    Test:
+      type: oauth2
+      description: Security scheme for test environment. This API uses OAuth 2 with the client credential grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://id-test.mollermobilitygroup.com
+          scopes: {}
+      x-audience:
+        - name: audience
+          in: body
+          description: The audience for the access token.
+          required: true
+    Stage:
+      type: oauth2
+      description: Security scheme for staging environment. This API uses OAuth 2 with the client credential grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://id-stage.mollermobilitygroup.com
+          scopes: {}
+      x-audience:
+        - name: audience
+          in: body
+          description: The audience for the access token.
+          required: true
+  schemas:
+    csv_header:
+      title: CSV Header
+      type: string
+      description: CSV response header
+      default: "text/csv; charset=utf-8"
+    cache_control_header:
+      title: Cache Control Header
+      type: string
+      example: max-age=60
+      description: As defined in RFC7234
+      externalDocs:
+        url: https://datatracker.ietf.org/doc/html/rfc7234
+      default: max-age=60
+    error_response:
+      title: Error Response
+      type: object
+      additionalProperties: false
+      description: >
+        `Error Response`
+      properties:
+        trace:
+          type: string
+          description: >
+            `Error Trace` uniquely identifying `Request`
+          example: "52786013393424535"
+        errors:
+          type: array
+          description: >
+            List of detailed `Error` messages
+          minItems: 1
+          maxItems: 3
+          items:
+            $ref: "#/components/schemas/error"
+    error:
+      title: Error
+      type: object
+      additionalProperties: false
+      description: >
+        An `Error`
+      properties:
+        code:
+          type: string
+          description: >
+            An `Error Code`
+          enum:
+            - client
+            - server
+        message:
+          type: string
+          description: >
+            A short `Error Message`
+          example: A short error message
+        more_info:
+          type: string
+          description: >
+            An extended `Error Message`
+          example: An extended error message
+    dealer:
+      title: Dealer
+      description: >
+        The full `Dealer` object with all related attributes
+      type: object
+      additionalProperties: false
+      required:
+        - market_name
+        - d365_id
+        - mnet_id
+        - country_code
+        - brands
+        - migration
+        - legal_entity
+        - dealer_group
+        - contact_information_list
+        - address_list
+      properties:
+        market_name:
+          $ref: '#/components/schemas/market_name'
+        d365_id:
+          $ref: '#/components/schemas/d365_id'
+        mnet_id:
+          $ref: '#/components/schemas/mnet_id'
+        country_code:
+          $ref: '#/components/schemas/country_code'
+        controlling_authority_number:
+          $ref: '#/components/schemas/controlling_authority_number'
+        dealer_organization_number:
+          $ref: '#/components/schemas/organization_number'
+        brands:
+          $ref: '#/components/schemas/brands'
+        migration:
+          $ref: '#/components/schemas/system_migration_state'
+        legal_entity:
+          $ref: '#/components/schemas/legal_entity'
+        dealer_group:
+          $ref: '#/components/schemas/dealer_group'
+        contact_information_list:
+          $ref: '#/components/schemas/contact_information_list'
+        address_list:
+          $ref: '#/components/schemas/address_list'
+    dealers_response:
+      title: Dealers Response
+      description: >
+        An object containing an array of `Dealer` objects.
+      type: object
+      additionalProperties: false
+      required: 
+        - dealers
+      properties:
+        dealers:
+          description: >
+            An array of `Dealer` objects
+          type: array
+          minItems: 1
+          maxItems: 10000
+          items:
+            $ref: "#/components/schemas/dealer"
+    dealer_map:
+      title: Dealer Map
+      description: >
+        A stripped down variant of `Dealer`
+        Used to represent `Dealers` in `CSV` format
+      type: object
+      additionalProperties: false
+      required:
+        - market_name
+        - legal_entity_id
+        - d365_id
+        - mnet_id
+        - oem_dealer_id
+        - country_code
+        - d365_after_sales
+        - d365_sales
+        - mnet_after_sales
+        - mnet_sales
+      properties:
+        market_name:
+          $ref: '#/components/schemas/market_name'
+        legal_entity_id:
+          $ref: '#/components/schemas/legal_entity_id'
+        mnet_id:
+          $ref: '#/components/schemas/mnet_id'
+        d365_id:
+          $ref: '#/components/schemas/d365_id'
+        oem_dealer_id:
+          $ref: '#/components/schemas/oem_dealer_id'
+        country_code:
+          $ref: '#/components/schemas/country_code'
+        d365_after_sales:
+          description: Indicates if after sales is handled in Dynamics
+          type: boolean
+        d365_sales:
+          description: Indicates if sales is handled in Dynamics
+          type: boolean
+        mnet_after_sales:
+          description: Indicates if after sales is handled in MNET
+          type: boolean
+        mnet_sales:
+          description: Indicates if sales is handled in MNET
+          type: boolean
+    dealer_maps_response:
+      title: Dealer Maps
+      description: >
+        An object containing an array of `Dealer` objects.
+      type: object
+      additionalProperties: false
+      required: 
+        - dealer_maps
+      properties:
+        dealer_maps:
+          description: An array of `Dealer Map` objects.
+          type: array
+          minItems: 1
+          maxItems: 10000
+          items:
+            $ref: "#/components/schemas/dealer_map"
+    market_name:
+      title: Market Name
+      description: >
+        A `Dealer`'s market name
+      type: string
+      example: Møller Bil Ryen
+    legal_entity:
+      title: Legal Entity
+      description: >
+        The representation of a `Dealer` in judicial and taxation systems  
+        `Legal Entity Organization Number` is not a required field
+      type: object
+      additionalProperties: false
+      required: 
+        - legal_entity_id
+      properties: 
+        legal_entity_id:
+          $ref: "#/components/schemas/legal_entity_id"
+        legal_entity_organization_number:
+          $ref: "#/components/schemas/organization_number"
+      example: "{ \"legal_entity_id\": \"N550\",\"legal_entity_organization_number\": \"973108717\" }"
+    legal_entity_id:
+      title: Legal Entity ID
+      description: >
+        `Legal Entity ID` (1 country-defining character followed by 3 digits)  
+        The legal (law) representation of a `Dealer`
+      type: string
+      pattern: '^(E|L|N|S|T)\d\d\d$'
+      example: N550
+    d365_id:
+      title: D365 ID
+      description: >
+        `D365 ID` (4 digits)  
+        Might also be referred to as `Dynamics 365 ID`
+      type: string
+      pattern: '^[1,2,3,4,5,8]\d\d\d$'
+      minLength: 4
+      maxLength: 4
+      example: "1550"
+    mnet_id:
+      title: MNET ID
+      description: >
+        `MNET ID` (3 digits)
+      type: string
+      pattern: '^\d\d\d$'
+      minLength: 3
+      maxLength: 3
+      example: "550"
+    oem_dealer_id:
+      title: OEM Dealer ID
+      description: >
+        `OEM Dealer ID` (5 digits)  
+        Also referred to as `Dealer Number`  
+        This field can vary between `Brands` in certain `Countries`, and is therefore represented inside `Brand` and not on `Dealer`
+      type: string
+      pattern: '^\d\d\d\d\d$'
+      example: "00550"
+      minLength: 5
+      maxLength: 5
+    country_code:
+      title: Country Code
+      description: >
+        Three character code for a `Country`  
+        As defined in `ISO 3166-1 alpha-3`
+      type: string
+      pattern: '^(NOR|SWE|EST|LVA|LTU)$'
+      minLength: 3
+      maxLength: 3
+      example: NOR
+    controlling_authority_number:
+      title: Controlling Authority Number
+      description: >
+        A `Dealer's` `Controlling Authority Number`, or `Kontrollorgannummer` in Norwegian  
+        In Norway, it is issued by the `Norwegian Public Roads Administration`, or `Vegvesenet`, to `Dealer's` that are certified to perform
+        `Mandatory Roadworthiness Tests` on vehicles, commonly referred to as the `EU Test`  
+        The Norwegian terms for these are `Periodisk Kjøretøykontroll` (`PKK`) and `EU-kontroll`
+      type: string
+      pattern: '^(\d{4,5})$'
+      example: '12345'
+      minLength: 5
+      maxLength: 5
+      externalDocs:
+        url: https://www.vegvesen.no/kjoretoy/eie-og-vedlikeholde/for-verkstedbransjen/utfore-periodisk-kjoretoykontroll/
+    organization_number:
+      title: Organization Number
+      description: >
+        A `Dealer's` `Organization Number`, or `Organisasjonsnummer` in Norwegian  
+        The `Organization Number` is used to identify legal entities in judicial and taxation systems  
+        Some `Dealers` are sub-entities and report results as part of their parent `Legal Entity`
+      type: string
+      pattern: '^(\d{3}\d{3}\d{3})$'
+      example: '973108093'
+      minLength: 9
+      maxLength: 9
+      externalDocs:
+        url: https://www.brreg.no/om-oss/registrene-vare/om-enhetsregisteret/organisasjonsnummeret/
+    brands:
+      title: Brands
+      description: >
+        Contains structured `OEM` information for all `Brands` that a `Dealer` is certified for
+      type: array
+      minItems: 1
+      maxItems: 5
+      items:
+        $ref: '#/components/schemas/brand'
+    brand:
+      title: Brand
+      description: >
+        Contains structured `OEM` information for one vehicle brand
+      type: object
+      additionalProperties: false
+      required:
+        - name
+        - brand_id
+        - oem_importer_id
+        - oem_dealer_id
+        - kvps_key
+        - kvps_id
+        - oem_wholesaler_key
+        - oem_partner_key
+        - certifications
+      properties:
+        name:
+          $ref: '#/components/schemas/brand_name'
+        brand_id:
+          $ref: '#/components/schemas/brand_id'
+        oem_importer_id:
+          $ref: '#/components/schemas/oem_importer_id'
+        oem_dealer_id:
+          $ref: '#/components/schemas/oem_dealer_id'
+        kvps_key:
+          $ref: '#/components/schemas/kvps_key'
+        kvps_id:
+          $ref: '#/components/schemas/kvps_id'
+        oem_wholesaler_key:
+          $ref: '#/components/schemas/oem_wholesaler_key'
+        oem_partner_key:
+          $ref: '#/components/schemas/oem_partner_key'
+        certifications:
+          $ref: '#/components/schemas/certifications'
+    brand_name:
+      title: Brand Name
+      description: >
+        The name of the supported `Brand`  
+      type: string
+      pattern: "^(Volkswagen|Volkswagen Commercial Vehicles|Audi|Skoda|Seat)$"
+      minLength: 1
+      maxLength: 20
+      example: Volkswagen
+    brand_id:
+      title: Brand ID
+      description: >
+        Single letter `Brand ID` as defined by `OEM`:  
+        * `V` - `Volkswagen`
+        * `N` - `Volkswagen Commercial Vehicles`
+        * `A - `Audi`
+        * `C - `Skoda`
+        * `S - `Seat`
+      type: string
+      pattern: "^(V|N|A|C|S)$"
+      minLength: 1
+      maxLength: 1
+      example: V
+    oem_importer_id:
+      title: OEM Importer ID
+      description: >
+        `OEM Importer ID` (3 digits)  
+        Also commonly referred to as `Region` and `BID` (Besteller ID)
+      type: string
+      pattern: '^\d\d\d$'
+      minLength: 3
+      maxLength: 3
+      example: "218"
+    kvps_key:
+      title: KVPS Key
+      description: >
+        `KVPS Key` - KVPS Partner Key (Partnerschlussel)  
+        `KVPS Key` comprises three elements - `Country Code`, `Brand ID` and `OEM Dealer ID`  
+        Not to be confused with `Partner Key`
+      type: string
+      pattern: '^(NOR|SWE|EST|LVA|LTU)(V|N|A|C|S)(\d\d\d\d\d)$'
+      minLength: 9
+      maxLength: 9
+      example: "NORV00550"
+    kvps_id:
+      title: KVPS ID
+      description: >
+        `KVPS ID` - compact `OEM` representation (12 letters)  
+        `KVPS ID` comprises four elements - `OEM Importer ID`, `Country Code`, `Brand ID`,  and `OEM Dealer ID`  
+        It is identical to `KVPS Key` with the addition of `OEM Importer ID` at the beginning
+      type: string
+      pattern: '^(\d\d\d)(NOR|SWE|EST|LVA|LTU)(V|N|A|C|S)(\d\d\d\d\d)$'
+      minLength: 12
+      maxLength: 12
+      example: "218NORV00550"
+    oem_wholesaler_key:
+      title: OEM Wholesaler Key
+      description: >
+        `OEM Wholesaler Key` comprises three elements - `Country Code`, `OEM Importer ID` and `Brand ID`
+      type: string
+      pattern: '^(NOR|SWE|EST|LVA|LTU)(\d\d\d)(V|N|A|C|S)$'
+      minLength: 7
+      maxLength: 7
+      example: "NOR218V"
+    oem_partner_key:
+      title: OEM Partner Key
+      description: >
+        `OEM Partner Key` comprises three elements - `Country Code`, `OEM ID` and `Brand ID`  
+        Not to be confused with `KVPS Key`
+      type: string
+      pattern: '^(NOR|SWE|EST|LVA|LTU)(\d\d\d\d\d)(V|N|A|C|S)$'
+      minLength: 9
+      maxLength: 9
+      example: "NOR00550V"     
+    certifications:
+      title: Certifications
+      type: object
+      additionalProperties: false
+      description: >
+        Information about the `Dealer's` `Certifications` for this `Brand`
+      properties:
+        sales:
+          description: >
+            Indicates if a `Dealer` is certified for `Sales` for a specific `Brand`
+          type: boolean
+        service:
+          description: >
+            Indicates if a `Dealer` is certified for `Service` for a specific `Brand`
+          type: boolean
+        body_work:
+          description: >
+            Indicates if a `Dealer` is certified for `Body Work` for a specific `Brand`
+          type: boolean
+      required:
+        - sales
+        - service
+        - body_work
+      example: "{ \"sales\": true, \"service\": false, \"body_work\": true }"
+    domain_migration_state:
+      title: Domain Migration State
+      type: object
+      additionalProperties: false
+      description: >
+        `Domain Migration State` indicates domain level migration states for a dealer in either system
+      properties:
+        after_sales:
+          description: Indicates if after sales is handled in system
+          type: boolean
+        sales:
+          description: Indicates if sales is handled in system
+          type: boolean
+      required:
+        - after_sales
+        - sales
+    system_migration_state:
+      title: System Migration State
+      description: >
+        `System Migration State` contains `Domain Migration State` for `D365` and `MNET`
+      type: object
+      additionalProperties: false
+      properties:
+        d365:
+          $ref: '#/components/schemas/domain_migration_state'
+        mnet:
+          $ref: '#/components/schemas/domain_migration_state'
+      required:
+        - d365
+        - mnet
+      example: "{ \"d365\": { \"after_sales\": true, \"sales\": false }, \"mnet\": { \"after_sales\": false, \"sales\": true } }"
+    dealer_group:
+      title: Dealer Group
+      description: >
+        The `Dealer Group` which this `Dealer` belongs to
+      type: object
+      additionalProperties: false
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Møller Bil
+    contact_information_list:
+      title: Contact Information List
+      description: >
+        Contains a list of `Contact Information` objects that belong to a `Dealer`
+      type: array
+      items: 
+        $ref: '#/components/schemas/contact_information'
+      minItems: 1
+      maxItems: 99
+    contact_information:
+      title: Contact Information
+      description: >
+        Contains `Contact Information` to a `Dealer`  
+        Both `E-mail` and `Phone` are optional fields to account for a varying number of either
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/relations_type'
+        email:
+          title: Email Address
+          description: >
+            A `Dealer's` e-mail address  
+          type: string
+          example: "ryen@moller.no"
+        phone:
+          title: Phone Number
+          description: >
+            A `Dealer's` phone number
+          type: string
+          example: "24032300"
+      required:
+        - type
+    address_list:
+      title: Address List
+      description: >
+        Contains a list of `Address` objects that belong to a `Dealer`
+      type: array
+      items:
+        $ref: '#/components/schemas/address'
+      minItems: 1
+      maxItems: 99
+    address:
+      title: Address
+      description: >
+        `Address` object containing segmented address fields
+      type: object
+      additionalProperties: false
+      required: 
+        - type
+        - street
+        - zip_code
+        - city
+      properties:
+        type:
+          $ref: '#/components/schemas/relations_type'
+        street:
+          description: >
+            The `Street Address` of the physical location of a `Dealer`
+            A valid street address contains at least a street name and a number, with an optional letter at the end.
+          type: string
+          example: "Enebakkveien 154"
+        zip_code:
+          description: >
+            The `Zip Code` of the physical location of a `Dealer`  
+            A valid zip code comprises four digits
+          type: string
+          pattern: "^([0-9]{4})$"
+          minLength: 4
+          maxLength: 4
+          example: "0609"
+        city:
+          description: >
+            The name of the `City` (or town/place) of the physical location of a `Dealer`
+          type: string
+          example: "Oslo"
+        latitude:
+          description: >
+            `Coordinate` that describes the `North-South` position of the physical location of a `Dealer`
+          type: string
+          pattern: '^([0-9]{2}.[0-9]{5})$'
+          example: "59.89654"
+        longitude:
+          description: >
+            `Coordinate` that describes the `East-West` position of the physical location of a `Dealer`
+          type: string
+          pattern: '^([0-9]{2}.[0-9]{5})$'
+          example: "10.80166"
+        description:
+          description: >
+            A free text `Description` field for `Address` objects  
+            Used to describe any particular directions, or properties of the `Address`
+          type: string
+          minLength: 0
+          maxLength: 1024
+          example: "There are three entrances at this location. The workshop entrance is on the other side of the road."
+    relations_type:
+      title: Relations Type
+      description: >
+        The type which a `Contact Information` or `Address` object belongs to  
+      type: string
+      enum:
+        - primary
+    country_code_filter:
+      title: Country Code Filter
+      type: string
+      enum:
+        - nor
+        - swe
+        - est
+        - lva
+        - ltu
+    brand_name_filter:
+      title: Brand Name Filter
+      type: string
+      enum:
+        - volkswagen
+        - volkswagen_commercial_vehicles
+        - audi
+        - skoda
+        - seat
+        - cupra
+    brand_certifications_filter:
+      title: Brand Certifications Filter
+      type: string
+      enum:
+        - sales
+        - service
+        - body_work
+    migration_365_after_sales_filter:
+      title: Migration D365 After Sales Filter
+      type: boolean

@@ -1,0 +1,1866 @@
+{
+  "format_version": "0.1",
+  "terraform_version": "0.13.7",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "google_kms_crypto_key.sp171_compliant_key",
+          "mode": "managed",
+          "type": "google_kms_crypto_key",
+          "name": "sp171_compliant_key",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 1,
+          "values": {
+            "labels": null,
+            "name": "compliant-crypto-key-example",
+            "purpose": "ENCRYPT_DECRYPT",
+            "rotation_period": "100000s",
+            "skip_initial_version_creation": null,
+            "timeouts": null,
+            "version_template": [
+              {
+                "algorithm": "AES_256_GCM",
+                "protection_level": "HSM"
+              }
+            ]
+          }
+        },
+        {
+          "address": "google_kms_crypto_key.sp171_violating_key",
+          "mode": "managed",
+          "type": "google_kms_crypto_key",
+          "name": "sp171_violating_key",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 1,
+          "values": {
+            "labels": null,
+            "name": "violating-crypto-key-example",
+            "purpose": "ENCRYPT_DECRYPT",
+            "rotation_period": "100000s",
+            "skip_initial_version_creation": null,
+            "timeouts": null,
+            "version_template": [
+              {
+                "algorithm": "AES_256_GCM",
+                "protection_level": "HSM"
+              }
+            ]
+          }
+        },
+        {
+          "address": "google_kms_crypto_key_iam_binding.sp171_compliant_binding",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_binding",
+          "name": "sp171_compliant_binding",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "condition": [],
+            "members": [
+              "group:group1@example.com"
+            ],
+            "role": "roles/cloudkms.cryptoKeyEncrypter"
+          }
+        },
+        {
+          "address": "google_kms_crypto_key_iam_binding.sp171_violating_binding_1",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_binding",
+          "name": "sp171_violating_binding_1",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "condition": [],
+            "members": [
+              "allUsers",
+              "group:group1@example.com"
+            ],
+            "role": "roles/cloudkms.cryptoKeyEncrypter"
+          }
+        },
+        {
+          "address": "google_kms_crypto_key_iam_binding.sp171_violating_binding_2",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_binding",
+          "name": "sp171_violating_binding_2",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "condition": [],
+            "members": [
+              "allAuthenticatedUsers",
+              "group:group1@example.com"
+            ],
+            "role": "roles/cloudkms.cryptoKeyEncrypter"
+          }
+        },
+        {
+          "address": "google_kms_crypto_key_iam_member.sp171_compliant_member",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_member",
+          "name": "sp171_compliant_member",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "condition": [],
+            "member": "group:group1@example.com",
+            "role": "roles/cloudkms.cryptoKeyEncrypter"
+          }
+        },
+        {
+          "address": "google_kms_crypto_key_iam_member.sp171_violating_member_1",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_member",
+          "name": "sp171_violating_member_1",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "condition": [],
+            "member": "allUsers",
+            "role": "roles/cloudkms.cryptoKeyEncrypter"
+          }
+        },
+        {
+          "address": "google_kms_crypto_key_iam_member.sp171_violating_member_2",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_member",
+          "name": "sp171_violating_member_2",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "condition": [],
+            "member": "allAuthenticatedUsers",
+            "role": "roles/cloudkms.cryptoKeyEncrypter"
+          }
+        },
+        {
+          "address": "google_kms_crypto_key_iam_policy.sp171_compliant_policy",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_policy",
+          "name": "sp171_compliant_policy",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "policy_data": "{\"bindings\":[{\"members\":[\"group:team1@example.com\"],\"role\":\"roles/cloudkms.cryptoKeyEncrypter\"}]}"
+          }
+        },
+        {
+          "address": "google_kms_crypto_key_iam_policy.sp171_violating_policy",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_policy",
+          "name": "sp171_violating_policy",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "policy_data": "{\"bindings\":[{\"members\":[\"allUsers\"],\"role\":\"roles/cloudkms.cryptoKeyEncrypter\"}]}"
+          }
+        },
+        {
+          "address": "google_kms_key_ring.sp171_keyring",
+          "mode": "managed",
+          "type": "google_kms_key_ring",
+          "name": "sp171_keyring",
+          "provider_name": "registry.terraform.io/hashicorp/google",
+          "schema_version": 0,
+          "values": {
+            "location": "global",
+            "name": "keyring-example",
+            "project": "iac-policy-project",
+            "timeouts": null
+          }
+        }
+      ],
+      "child_modules": [
+        {
+          "resources": [
+            {
+              "address": "module.sp171_compliant_kms_key_test.google_kms_crypto_key.example_key",
+              "mode": "managed",
+              "type": "google_kms_crypto_key",
+              "name": "example_key",
+              "provider_name": "registry.terraform.io/hashicorp/google",
+              "schema_version": 1,
+              "values": {
+                "labels": null,
+                "name": "pac-ring-1-pac-bq-key-1-dataset-1",
+                "purpose": "ENCRYPT_DECRYPT",
+                "rotation_period": null,
+                "skip_initial_version_creation": null,
+                "timeouts": null,
+                "version_template": [
+                  {
+                    "algorithm": "AES_256_GCM",
+                    "protection_level": "HSM"
+                  }
+                ]
+              }
+            },
+            {
+              "address": "module.sp171_compliant_kms_key_test.google_kms_crypto_key_iam_member.crypto_key[\"serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com\"]",
+              "mode": "managed",
+              "type": "google_kms_crypto_key_iam_member",
+              "name": "crypto_key",
+              "index": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+              "provider_name": "registry.terraform.io/hashicorp/google",
+              "schema_version": 0,
+              "values": {
+                "condition": [],
+                "member": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+                "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+              }
+            }
+          ],
+          "address": "module.sp171_compliant_kms_key_test"
+        },
+        {
+          "resources": [
+            {
+              "address": "module.sp171_compliant_kms_keyring_test.google_kms_key_ring.example_keyring",
+              "mode": "managed",
+              "type": "google_kms_key_ring",
+              "name": "example_keyring",
+              "provider_name": "registry.terraform.io/hashicorp/google",
+              "schema_version": 0,
+              "values": {
+                "location": "global",
+                "name": "ms-phi-bq-adp-global-n",
+                "project": "corebuild-10022019",
+                "timeouts": null
+              }
+            },
+            {
+              "address": "module.sp171_compliant_kms_keyring_test.google_kms_key_ring_iam_member.ring_iam[\"serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com\"]",
+              "mode": "managed",
+              "type": "google_kms_key_ring_iam_member",
+              "name": "ring_iam",
+              "index": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+              "provider_name": "registry.terraform.io/hashicorp/google",
+              "schema_version": 0,
+              "values": {
+                "condition": [],
+                "member": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+                "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+              }
+            }
+          ],
+          "address": "module.sp171_compliant_kms_keyring_test"
+        },
+        {
+          "resources": [
+            {
+              "address": "module.sp171_violating_kms_key_test.google_kms_crypto_key.example_key",
+              "mode": "managed",
+              "type": "google_kms_crypto_key",
+              "name": "example_key",
+              "provider_name": "registry.terraform.io/hashicorp/google",
+              "schema_version": 1,
+              "values": {
+                "labels": null,
+                "name": "pac-ring-2-pac-bq-key-2-dataset-1",
+                "purpose": "ENCRYPT_DECRYPT",
+                "rotation_period": null,
+                "skip_initial_version_creation": null,
+                "timeouts": null,
+                "version_template": [
+                  {
+                    "algorithm": "AES_256_GCM",
+                    "protection_level": "HSM"
+                  }
+                ]
+              }
+            },
+            {
+              "address": "module.sp171_violating_kms_key_test.google_kms_crypto_key_iam_member.crypto_key[\"allAuthenticatedUsers\"]",
+              "mode": "managed",
+              "type": "google_kms_crypto_key_iam_member",
+              "name": "crypto_key",
+              "index": "allAuthenticatedUsers",
+              "provider_name": "registry.terraform.io/hashicorp/google",
+              "schema_version": 0,
+              "values": {
+                "condition": [],
+                "member": "allAuthenticatedUsers",
+                "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+              }
+            },
+            {
+              "address": "module.sp171_violating_kms_key_test.google_kms_crypto_key_iam_member.crypto_key[\"serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com\"]",
+              "mode": "managed",
+              "type": "google_kms_crypto_key_iam_member",
+              "name": "crypto_key",
+              "index": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+              "provider_name": "registry.terraform.io/hashicorp/google",
+              "schema_version": 0,
+              "values": {
+                "condition": [],
+                "member": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+                "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+              }
+            }
+          ],
+          "address": "module.sp171_violating_kms_key_test"
+        },
+        {
+          "resources": [
+            {
+              "address": "module.sp171_violating_kms_keyring_test.google_kms_key_ring.example_keyring",
+              "mode": "managed",
+              "type": "google_kms_key_ring",
+              "name": "example_keyring",
+              "provider_name": "registry.terraform.io/hashicorp/google",
+              "schema_version": 0,
+              "values": {
+                "location": "global",
+                "name": "ms-phi-bq-adp-global-n",
+                "project": "corebuild-10022019",
+                "timeouts": null
+              }
+            },
+            {
+              "address": "module.sp171_violating_kms_keyring_test.google_kms_key_ring_iam_member.ring_iam[\"serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com\"]",
+              "mode": "managed",
+              "type": "google_kms_key_ring_iam_member",
+              "name": "ring_iam",
+              "index": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+              "provider_name": "registry.terraform.io/hashicorp/google",
+              "schema_version": 0,
+              "values": {
+                "condition": [],
+                "member": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+                "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+              }
+            }
+          ],
+          "address": "module.sp171_violating_kms_keyring_test"
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "google_kms_crypto_key.sp171_compliant_key",
+      "mode": "managed",
+      "type": "google_kms_crypto_key",
+      "name": "sp171_compliant_key",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "labels": null,
+          "name": "compliant-crypto-key-example",
+          "purpose": "ENCRYPT_DECRYPT",
+          "rotation_period": "100000s",
+          "skip_initial_version_creation": null,
+          "timeouts": null,
+          "version_template": [
+            {
+              "algorithm": "AES_256_GCM",
+              "protection_level": "HSM"
+            }
+          ]
+        },
+        "after_unknown": {
+          "destroy_scheduled_duration": true,
+          "effective_labels": true,
+          "id": true,
+          "import_only": true,
+          "key_ring": true,
+          "terraform_labels": true,
+          "version_template": [
+            {}
+          ]
+        }
+      }
+    },
+    {
+      "address": "google_kms_crypto_key.sp171_violating_key",
+      "mode": "managed",
+      "type": "google_kms_crypto_key",
+      "name": "sp171_violating_key",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "labels": null,
+          "name": "violating-crypto-key-example",
+          "purpose": "ENCRYPT_DECRYPT",
+          "rotation_period": "100000s",
+          "skip_initial_version_creation": null,
+          "timeouts": null,
+          "version_template": [
+            {
+              "algorithm": "AES_256_GCM",
+              "protection_level": "HSM"
+            }
+          ]
+        },
+        "after_unknown": {
+          "destroy_scheduled_duration": true,
+          "effective_labels": true,
+          "id": true,
+          "import_only": true,
+          "key_ring": true,
+          "terraform_labels": true,
+          "version_template": [
+            {}
+          ]
+        }
+      }
+    },
+    {
+      "address": "google_kms_crypto_key_iam_binding.sp171_compliant_binding",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_binding",
+      "name": "sp171_compliant_binding",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "members": [
+            "group:group1@example.com"
+          ],
+          "role": "roles/cloudkms.cryptoKeyEncrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true,
+          "members": [
+            false
+          ]
+        }
+      }
+    },
+    {
+      "address": "google_kms_crypto_key_iam_binding.sp171_violating_binding_1",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_binding",
+      "name": "sp171_violating_binding_1",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "members": [
+            "allUsers",
+            "group:group1@example.com"
+          ],
+          "role": "roles/cloudkms.cryptoKeyEncrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true,
+          "members": [
+            false,
+            false
+          ]
+        }
+      }
+    },
+    {
+      "address": "google_kms_crypto_key_iam_binding.sp171_violating_binding_2",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_binding",
+      "name": "sp171_violating_binding_2",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "members": [
+            "allAuthenticatedUsers",
+            "group:group1@example.com"
+          ],
+          "role": "roles/cloudkms.cryptoKeyEncrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true,
+          "members": [
+            false,
+            false
+          ]
+        }
+      }
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.sp171_compliant_member",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_member",
+      "name": "sp171_compliant_member",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "member": "group:group1@example.com",
+          "role": "roles/cloudkms.cryptoKeyEncrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.sp171_violating_member_1",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_member",
+      "name": "sp171_violating_member_1",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "member": "allUsers",
+          "role": "roles/cloudkms.cryptoKeyEncrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.sp171_violating_member_2",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_member",
+      "name": "sp171_violating_member_2",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "member": "allAuthenticatedUsers",
+          "role": "roles/cloudkms.cryptoKeyEncrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "google_kms_crypto_key_iam_policy.sp171_compliant_policy",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_policy",
+      "name": "sp171_compliant_policy",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "policy_data": "{\"bindings\":[{\"members\":[\"group:team1@example.com\"],\"role\":\"roles/cloudkms.cryptoKeyEncrypter\"}]}"
+        },
+        "after_unknown": {
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "google_kms_crypto_key_iam_policy.sp171_violating_policy",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_policy",
+      "name": "sp171_violating_policy",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "policy_data": "{\"bindings\":[{\"members\":[\"allUsers\"],\"role\":\"roles/cloudkms.cryptoKeyEncrypter\"}]}"
+        },
+        "after_unknown": {
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "google_kms_key_ring.sp171_keyring",
+      "mode": "managed",
+      "type": "google_kms_key_ring",
+      "name": "sp171_keyring",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "location": "global",
+          "name": "keyring-example",
+          "project": "iac-policy-project",
+          "timeouts": null
+        },
+        "after_unknown": {
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "module.sp171_compliant_kms_key_test.google_kms_crypto_key.example_key",
+      "module_address": "module.sp171_compliant_kms_key_test",
+      "mode": "managed",
+      "type": "google_kms_crypto_key",
+      "name": "example_key",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "labels": null,
+          "name": "pac-ring-1-pac-bq-key-1-dataset-1",
+          "purpose": "ENCRYPT_DECRYPT",
+          "rotation_period": null,
+          "skip_initial_version_creation": null,
+          "timeouts": null,
+          "version_template": [
+            {
+              "algorithm": "AES_256_GCM",
+              "protection_level": "HSM"
+            }
+          ]
+        },
+        "after_unknown": {
+          "destroy_scheduled_duration": true,
+          "effective_labels": true,
+          "id": true,
+          "import_only": true,
+          "key_ring": true,
+          "terraform_labels": true,
+          "version_template": [
+            {}
+          ]
+        }
+      }
+    },
+    {
+      "address": "module.sp171_compliant_kms_key_test.google_kms_crypto_key_iam_member.crypto_key[\"serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com\"]",
+      "module_address": "module.sp171_compliant_kms_key_test",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_member",
+      "name": "crypto_key",
+      "index": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "member": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+          "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "module.sp171_compliant_kms_keyring_test.google_kms_key_ring.example_keyring",
+      "module_address": "module.sp171_compliant_kms_keyring_test",
+      "mode": "managed",
+      "type": "google_kms_key_ring",
+      "name": "example_keyring",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "location": "global",
+          "name": "ms-phi-bq-adp-global-n",
+          "project": "corebuild-10022019",
+          "timeouts": null
+        },
+        "after_unknown": {
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "module.sp171_compliant_kms_keyring_test.google_kms_key_ring_iam_member.ring_iam[\"serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com\"]",
+      "module_address": "module.sp171_compliant_kms_keyring_test",
+      "mode": "managed",
+      "type": "google_kms_key_ring_iam_member",
+      "name": "ring_iam",
+      "index": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "member": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+          "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "etag": true,
+          "id": true,
+          "key_ring_id": true
+        }
+      }
+    },
+    {
+      "address": "module.sp171_violating_kms_key_test.google_kms_crypto_key.example_key",
+      "module_address": "module.sp171_violating_kms_key_test",
+      "mode": "managed",
+      "type": "google_kms_crypto_key",
+      "name": "example_key",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "labels": null,
+          "name": "pac-ring-2-pac-bq-key-2-dataset-1",
+          "purpose": "ENCRYPT_DECRYPT",
+          "rotation_period": null,
+          "skip_initial_version_creation": null,
+          "timeouts": null,
+          "version_template": [
+            {
+              "algorithm": "AES_256_GCM",
+              "protection_level": "HSM"
+            }
+          ]
+        },
+        "after_unknown": {
+          "destroy_scheduled_duration": true,
+          "effective_labels": true,
+          "id": true,
+          "import_only": true,
+          "key_ring": true,
+          "terraform_labels": true,
+          "version_template": [
+            {}
+          ]
+        }
+      }
+    },
+    {
+      "address": "module.sp171_violating_kms_key_test.google_kms_crypto_key_iam_member.crypto_key[\"allAuthenticatedUsers\"]",
+      "module_address": "module.sp171_violating_kms_key_test",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_member",
+      "name": "crypto_key",
+      "index": "allAuthenticatedUsers",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "member": "allAuthenticatedUsers",
+          "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "module.sp171_violating_kms_key_test.google_kms_crypto_key_iam_member.crypto_key[\"serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com\"]",
+      "module_address": "module.sp171_violating_kms_key_test",
+      "mode": "managed",
+      "type": "google_kms_crypto_key_iam_member",
+      "name": "crypto_key",
+      "index": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "member": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+          "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "crypto_key_id": true,
+          "etag": true,
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "module.sp171_violating_kms_keyring_test.google_kms_key_ring.example_keyring",
+      "module_address": "module.sp171_violating_kms_keyring_test",
+      "mode": "managed",
+      "type": "google_kms_key_ring",
+      "name": "example_keyring",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "location": "global",
+          "name": "ms-phi-bq-adp-global-n",
+          "project": "corebuild-10022019",
+          "timeouts": null
+        },
+        "after_unknown": {
+          "id": true
+        }
+      }
+    },
+    {
+      "address": "module.sp171_violating_kms_keyring_test.google_kms_key_ring_iam_member.ring_iam[\"serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com\"]",
+      "module_address": "module.sp171_violating_kms_keyring_test",
+      "mode": "managed",
+      "type": "google_kms_key_ring_iam_member",
+      "name": "ring_iam",
+      "index": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+      "provider_name": "registry.terraform.io/hashicorp/google",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "condition": [],
+          "member": "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com",
+          "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+        },
+        "after_unknown": {
+          "condition": [],
+          "etag": true,
+          "id": true,
+          "key_ring_id": true
+        }
+      }
+    }
+  ],
+  "prior_state": {
+    "format_version": "0.1",
+    "terraform_version": "0.13.7",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "data.google_iam_policy.sp171_compliant_1",
+            "mode": "data",
+            "type": "google_iam_policy",
+            "name": "sp171_compliant_1",
+            "provider_name": "registry.terraform.io/hashicorp/google",
+            "schema_version": 0,
+            "values": {
+              "audit_config": null,
+              "binding": [
+                {
+                  "condition": [],
+                  "members": [
+                    "group:team1@example.com"
+                  ],
+                  "role": "roles/cloudkms.cryptoKeyEncrypter"
+                }
+              ],
+              "id": "4091660864",
+              "policy_data": "{\"bindings\":[{\"members\":[\"group:team1@example.com\"],\"role\":\"roles/cloudkms.cryptoKeyEncrypter\"}]}"
+            }
+          },
+          {
+            "address": "data.google_iam_policy.sp171_violating_1",
+            "mode": "data",
+            "type": "google_iam_policy",
+            "name": "sp171_violating_1",
+            "provider_name": "registry.terraform.io/hashicorp/google",
+            "schema_version": 0,
+            "values": {
+              "audit_config": null,
+              "binding": [
+                {
+                  "condition": [],
+                  "members": [
+                    "allUsers"
+                  ],
+                  "role": "roles/cloudkms.cryptoKeyEncrypter"
+                }
+              ],
+              "id": "3839323604",
+              "policy_data": "{\"bindings\":[{\"members\":[\"allUsers\"],\"role\":\"roles/cloudkms.cryptoKeyEncrypter\"}]}"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "google": {
+        "name": "google",
+        "expressions": {
+          "project": {
+            "constant_value": "project1"
+          },
+          "region": {
+            "constant_value": "us-central-1"
+          }
+        }
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "google_kms_crypto_key.sp171_compliant_key",
+          "mode": "managed",
+          "type": "google_kms_crypto_key",
+          "name": "sp171_compliant_key",
+          "provider_config_key": "google",
+          "expressions": {
+            "key_ring": {
+              "references": [
+                "google_kms_key_ring.sp171_keyring"
+              ]
+            },
+            "name": {
+              "constant_value": "compliant-crypto-key-example"
+            },
+            "rotation_period": {
+              "constant_value": "100000s"
+            },
+            "version_template": [
+              {
+                "algorithm": {
+                  "constant_value": "AES_256_GCM"
+                },
+                "protection_level": {
+                  "constant_value": "HSM"
+                }
+              }
+            ]
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "google_kms_crypto_key.sp171_violating_key",
+          "mode": "managed",
+          "type": "google_kms_crypto_key",
+          "name": "sp171_violating_key",
+          "provider_config_key": "google",
+          "expressions": {
+            "key_ring": {
+              "references": [
+                "google_kms_key_ring.sp171_keyring"
+              ]
+            },
+            "name": {
+              "constant_value": "violating-crypto-key-example"
+            },
+            "rotation_period": {
+              "constant_value": "100000s"
+            },
+            "version_template": [
+              {
+                "algorithm": {
+                  "constant_value": "AES_256_GCM"
+                },
+                "protection_level": {
+                  "constant_value": "HSM"
+                }
+              }
+            ]
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "google_kms_crypto_key_iam_binding.sp171_compliant_binding",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_binding",
+          "name": "sp171_compliant_binding",
+          "provider_config_key": "google",
+          "expressions": {
+            "crypto_key_id": {
+              "references": [
+                "google_kms_crypto_key.sp171_compliant_key"
+              ]
+            },
+            "members": {
+              "constant_value": [
+                "group:group1@example.com"
+              ]
+            },
+            "role": {
+              "constant_value": "roles/cloudkms.cryptoKeyEncrypter"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "google_kms_crypto_key_iam_binding.sp171_violating_binding_1",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_binding",
+          "name": "sp171_violating_binding_1",
+          "provider_config_key": "google",
+          "expressions": {
+            "crypto_key_id": {
+              "references": [
+                "google_kms_crypto_key.sp171_violating_key"
+              ]
+            },
+            "members": {
+              "constant_value": [
+                "group:group1@example.com",
+                "allUsers"
+              ]
+            },
+            "role": {
+              "constant_value": "roles/cloudkms.cryptoKeyEncrypter"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "google_kms_crypto_key_iam_binding.sp171_violating_binding_2",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_binding",
+          "name": "sp171_violating_binding_2",
+          "provider_config_key": "google",
+          "expressions": {
+            "crypto_key_id": {
+              "references": [
+                "google_kms_crypto_key.sp171_violating_key"
+              ]
+            },
+            "members": {
+              "constant_value": [
+                "group:group1@example.com",
+                "allAuthenticatedUsers"
+              ]
+            },
+            "role": {
+              "constant_value": "roles/cloudkms.cryptoKeyEncrypter"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "google_kms_crypto_key_iam_member.sp171_compliant_member",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_member",
+          "name": "sp171_compliant_member",
+          "provider_config_key": "google",
+          "expressions": {
+            "crypto_key_id": {
+              "references": [
+                "google_kms_crypto_key.sp171_compliant_key"
+              ]
+            },
+            "member": {
+              "constant_value": "group:group1@example.com"
+            },
+            "role": {
+              "constant_value": "roles/cloudkms.cryptoKeyEncrypter"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "google_kms_crypto_key_iam_member.sp171_violating_member_1",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_member",
+          "name": "sp171_violating_member_1",
+          "provider_config_key": "google",
+          "expressions": {
+            "crypto_key_id": {
+              "references": [
+                "google_kms_crypto_key.sp171_violating_key"
+              ]
+            },
+            "member": {
+              "constant_value": "allUsers"
+            },
+            "role": {
+              "constant_value": "roles/cloudkms.cryptoKeyEncrypter"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "google_kms_crypto_key_iam_member.sp171_violating_member_2",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_member",
+          "name": "sp171_violating_member_2",
+          "provider_config_key": "google",
+          "expressions": {
+            "crypto_key_id": {
+              "references": [
+                "google_kms_crypto_key.sp171_violating_key"
+              ]
+            },
+            "member": {
+              "constant_value": "allAuthenticatedUsers"
+            },
+            "role": {
+              "constant_value": "roles/cloudkms.cryptoKeyEncrypter"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "google_kms_crypto_key_iam_policy.sp171_compliant_policy",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_policy",
+          "name": "sp171_compliant_policy",
+          "provider_config_key": "google",
+          "expressions": {
+            "crypto_key_id": {
+              "references": [
+                "google_kms_crypto_key.sp171_compliant_key"
+              ]
+            },
+            "policy_data": {
+              "references": [
+                "data.google_iam_policy.sp171_compliant_1"
+              ]
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "google_kms_crypto_key_iam_policy.sp171_violating_policy",
+          "mode": "managed",
+          "type": "google_kms_crypto_key_iam_policy",
+          "name": "sp171_violating_policy",
+          "provider_config_key": "google",
+          "expressions": {
+            "crypto_key_id": {
+              "references": [
+                "google_kms_crypto_key.sp171_violating_key"
+              ]
+            },
+            "policy_data": {
+              "references": [
+                "data.google_iam_policy.sp171_violating_1"
+              ]
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "google_kms_key_ring.sp171_keyring",
+          "mode": "managed",
+          "type": "google_kms_key_ring",
+          "name": "sp171_keyring",
+          "provider_config_key": "google",
+          "expressions": {
+            "location": {
+              "constant_value": "global"
+            },
+            "name": {
+              "constant_value": "keyring-example"
+            },
+            "project": {
+              "constant_value": "iac-policy-project"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "data.google_iam_policy.sp171_compliant_1",
+          "mode": "data",
+          "type": "google_iam_policy",
+          "name": "sp171_compliant_1",
+          "provider_config_key": "google",
+          "expressions": {
+            "binding": [
+              {
+                "members": {
+                  "constant_value": [
+                    "group:team1@example.com"
+                  ]
+                },
+                "role": {
+                  "constant_value": "roles/cloudkms.cryptoKeyEncrypter"
+                }
+              }
+            ]
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "data.google_iam_policy.sp171_violating_1",
+          "mode": "data",
+          "type": "google_iam_policy",
+          "name": "sp171_violating_1",
+          "provider_config_key": "google",
+          "expressions": {
+            "binding": [
+              {
+                "members": {
+                  "constant_value": [
+                    "allUsers"
+                  ]
+                },
+                "role": {
+                  "constant_value": "roles/cloudkms.cryptoKeyEncrypter"
+                }
+              }
+            ]
+          },
+          "schema_version": 0
+        }
+      ],
+      "module_calls": {
+        "sp171_compliant_kms_key_test": {
+          "source": "tfe.mayo.edu/mcc/m-kms-key/google",
+          "expressions": {
+            "key_algorithm": {
+              "constant_value": "AES_256_GCM"
+            },
+            "key_iam": {
+              "constant_value": {
+                "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+              }
+            },
+            "key_name": {
+              "constant_value": "pac-bq-key-1-dataset-1"
+            },
+            "key_protection_level": {
+              "constant_value": "HSM"
+            },
+            "key_ring_link": {
+              "references": [
+                "module.sp171_compliant_kms_keyring_test.id"
+              ]
+            },
+            "key_ring_name": {
+              "constant_value": "pac-ring-1"
+            }
+          },
+          "module": {
+            "outputs": {
+              "id": {
+                "expression": {
+                  "references": [
+                    "google_kms_crypto_key.example_key"
+                  ]
+                },
+                "description": "ID to the key"
+              },
+              "labels": {
+                "expression": {
+                  "references": [
+                    "google_kms_crypto_key.example_key"
+                  ]
+                },
+                "description": "Key labels"
+              }
+            },
+            "resources": [
+              {
+                "address": "google_kms_crypto_key.example_key",
+                "mode": "managed",
+                "type": "google_kms_crypto_key",
+                "name": "example_key",
+                "provider_config_key": "sp171_compliant_kms_key_test:google",
+                "expressions": {
+                  "key_ring": {
+                    "references": [
+                      "var.key_ring_link"
+                    ]
+                  },
+                  "labels": {
+                    "references": [
+                      "var.key_labels"
+                    ]
+                  },
+                  "name": {
+                    "references": [
+                      "local.derived_name"
+                    ]
+                  },
+                  "rotation_period": {
+                    "references": [
+                      "var.rotation_period"
+                    ]
+                  },
+                  "version_template": [
+                    {
+                      "algorithm": {
+                        "references": [
+                          "var.key_algorithm"
+                        ]
+                      },
+                      "protection_level": {
+                        "references": [
+                          "var.key_protection_level"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "schema_version": 1
+              },
+              {
+                "address": "google_kms_crypto_key_iam_member.crypto_key",
+                "mode": "managed",
+                "type": "google_kms_crypto_key_iam_member",
+                "name": "crypto_key",
+                "provider_config_key": "sp171_compliant_kms_key_test:google",
+                "expressions": {
+                  "crypto_key_id": {
+                    "references": [
+                      "google_kms_crypto_key.example_key"
+                    ]
+                  },
+                  "member": {
+                    "references": [
+                      "each.key"
+                    ]
+                  },
+                  "role": {
+                    "references": [
+                      "each.value"
+                    ]
+                  }
+                },
+                "schema_version": 0,
+                "for_each_expression": {
+                  "references": [
+                    "var.key_iam"
+                  ]
+                }
+              }
+            ],
+            "variables": {
+              "key_algorithm": {
+                "description": "The algorithm to use when creating a version"
+              },
+              "key_iam": {
+                "default": {},
+                "description": "A map containing the IAM member (key) and role (value) for the key"
+              },
+              "key_labels": {
+                "default": null,
+                "description": "A map containing the labels for the key"
+              },
+              "key_name": {
+                "description": "An arbitrary string name for the key"
+              },
+              "key_protection_level": {
+                "default": "SOFTWARE",
+                "description": "The protection level to use when creating a version based on this template. Possible values include SOFTWARE, HSM, EXTERNAL, EXTERNAL_VPC. Defaults to SOFTWARE."
+              },
+              "key_ring_link": {
+                "description": "The self link for the key ring"
+              },
+              "key_ring_name": {
+                "description": "The key ring name"
+              },
+              "rotation_period": {
+                "default": null,
+                "description": "The rotation period for the key"
+              }
+            }
+          }
+        },
+        "sp171_compliant_kms_keyring_test": {
+          "source": "tfe.mayo.edu/mcc/m-kms-keyring/google",
+          "expressions": {
+            "classification": {
+              "constant_value": "phi"
+            },
+            "env": {
+              "constant_value": "n"
+            },
+            "key_ring_iam": {
+              "constant_value": {
+                "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+              }
+            },
+            "key_ring_location": {
+              "constant_value": "global"
+            },
+            "org": {
+              "constant_value": "ms"
+            },
+            "project": {
+              "constant_value": "corebuild-10022019"
+            },
+            "purpose": {
+              "constant_value": "bq"
+            },
+            "tnt_code": {
+              "constant_value": "adp"
+            }
+          },
+          "module": {
+            "outputs": {
+              "id": {
+                "expression": {
+                  "references": [
+                    "google_kms_key_ring.example_keyring"
+                  ]
+                },
+                "description": "ID to the key ring"
+              },
+              "location": {
+                "expression": {
+                  "references": [
+                    "google_kms_key_ring.example_keyring"
+                  ]
+                },
+                "description": "Location where the key ring is stored"
+              },
+              "ring_name": {
+                "expression": {
+                  "references": [
+                    "google_kms_key_ring.example_keyring"
+                  ]
+                },
+                "description": "Key ring name"
+              }
+            },
+            "resources": [
+              {
+                "address": "google_kms_key_ring.example_keyring",
+                "mode": "managed",
+                "type": "google_kms_key_ring",
+                "name": "example_keyring",
+                "provider_config_key": "sp171_compliant_kms_keyring_test:google",
+                "expressions": {
+                  "location": {
+                    "references": [
+                      "var.key_ring_location"
+                    ]
+                  },
+                  "name": {
+                    "references": [
+                      "local.key_ring_name"
+                    ]
+                  },
+                  "project": {
+                    "references": [
+                      "var.project"
+                    ]
+                  }
+                },
+                "schema_version": 0
+              },
+              {
+                "address": "google_kms_key_ring_iam_member.ring_iam",
+                "mode": "managed",
+                "type": "google_kms_key_ring_iam_member",
+                "name": "ring_iam",
+                "provider_config_key": "sp171_compliant_kms_keyring_test:google",
+                "expressions": {
+                  "key_ring_id": {
+                    "references": [
+                      "google_kms_key_ring.example_keyring"
+                    ]
+                  },
+                  "member": {
+                    "references": [
+                      "each.key"
+                    ]
+                  },
+                  "role": {
+                    "references": [
+                      "each.value"
+                    ]
+                  }
+                },
+                "schema_version": 0,
+                "for_each_expression": {
+                  "references": [
+                    "var.key_ring_iam"
+                  ]
+                }
+              }
+            ],
+            "variables": {
+              "classification": {
+                "description": "The classification (ex: config, phi)"
+              },
+              "env": {
+                "description": "The name of the environment (ex: n)"
+              },
+              "key_ring_iam": {
+                "default": {},
+                "description": "A map containing the IAM member (key) and role (value) for the key_ring"
+              },
+              "key_ring_location": {
+                "description": "The location of the key ring"
+              },
+              "org": {
+                "description": "The name of org (ex: ml)"
+              },
+              "project": {
+                "description": "The project id that will contain the KMS resources"
+              },
+              "purpose": {
+                "description": "The purpose of the key ring"
+              },
+              "tnt_code": {
+                "description": "The name of the tenant (ex: adp)"
+              }
+            }
+          }
+        },
+        "sp171_violating_kms_key_test": {
+          "source": "tfe.mayo.edu/mcc/m-kms-key/google",
+          "expressions": {
+            "key_algorithm": {
+              "constant_value": "AES_256_GCM"
+            },
+            "key_iam": {
+              "constant_value": {
+                "allAuthenticatedUsers": "roles/cloudkms.cryptoKeyEncrypterDecrypter",
+                "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+              }
+            },
+            "key_name": {
+              "constant_value": "pac-bq-key-2-dataset-1"
+            },
+            "key_protection_level": {
+              "constant_value": "HSM"
+            },
+            "key_ring_link": {
+              "references": [
+                "module.sp171_violating_kms_keyring_test.id"
+              ]
+            },
+            "key_ring_name": {
+              "constant_value": "pac-ring-2"
+            }
+          },
+          "module": {
+            "outputs": {
+              "id": {
+                "expression": {
+                  "references": [
+                    "google_kms_crypto_key.example_key"
+                  ]
+                },
+                "description": "ID to the key"
+              },
+              "labels": {
+                "expression": {
+                  "references": [
+                    "google_kms_crypto_key.example_key"
+                  ]
+                },
+                "description": "Key labels"
+              }
+            },
+            "resources": [
+              {
+                "address": "google_kms_crypto_key.example_key",
+                "mode": "managed",
+                "type": "google_kms_crypto_key",
+                "name": "example_key",
+                "provider_config_key": "sp171_violating_kms_key_test:google",
+                "expressions": {
+                  "key_ring": {
+                    "references": [
+                      "var.key_ring_link"
+                    ]
+                  },
+                  "labels": {
+                    "references": [
+                      "var.key_labels"
+                    ]
+                  },
+                  "name": {
+                    "references": [
+                      "local.derived_name"
+                    ]
+                  },
+                  "rotation_period": {
+                    "references": [
+                      "var.rotation_period"
+                    ]
+                  },
+                  "version_template": [
+                    {
+                      "algorithm": {
+                        "references": [
+                          "var.key_algorithm"
+                        ]
+                      },
+                      "protection_level": {
+                        "references": [
+                          "var.key_protection_level"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "schema_version": 1
+              },
+              {
+                "address": "google_kms_crypto_key_iam_member.crypto_key",
+                "mode": "managed",
+                "type": "google_kms_crypto_key_iam_member",
+                "name": "crypto_key",
+                "provider_config_key": "sp171_violating_kms_key_test:google",
+                "expressions": {
+                  "crypto_key_id": {
+                    "references": [
+                      "google_kms_crypto_key.example_key"
+                    ]
+                  },
+                  "member": {
+                    "references": [
+                      "each.key"
+                    ]
+                  },
+                  "role": {
+                    "references": [
+                      "each.value"
+                    ]
+                  }
+                },
+                "schema_version": 0,
+                "for_each_expression": {
+                  "references": [
+                    "var.key_iam"
+                  ]
+                }
+              }
+            ],
+            "variables": {
+              "key_algorithm": {
+                "description": "The algorithm to use when creating a version"
+              },
+              "key_iam": {
+                "default": {},
+                "description": "A map containing the IAM member (key) and role (value) for the key"
+              },
+              "key_labels": {
+                "default": null,
+                "description": "A map containing the labels for the key"
+              },
+              "key_name": {
+                "description": "An arbitrary string name for the key"
+              },
+              "key_protection_level": {
+                "default": "SOFTWARE",
+                "description": "The protection level to use when creating a version based on this template. Possible values include SOFTWARE, HSM, EXTERNAL, EXTERNAL_VPC. Defaults to SOFTWARE."
+              },
+              "key_ring_link": {
+                "description": "The self link for the key ring"
+              },
+              "key_ring_name": {
+                "description": "The key ring name"
+              },
+              "rotation_period": {
+                "default": null,
+                "description": "The rotation period for the key"
+              }
+            }
+          }
+        },
+        "sp171_violating_kms_keyring_test": {
+          "source": "tfe.mayo.edu/mcc/m-kms-keyring/google",
+          "expressions": {
+            "classification": {
+              "constant_value": "phi"
+            },
+            "env": {
+              "constant_value": "n"
+            },
+            "key_ring_iam": {
+              "constant_value": {
+                "serviceAccount:bq-115856287916@bigquery-encryption.iam.gserviceaccount.com": "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+              }
+            },
+            "key_ring_location": {
+              "constant_value": "global"
+            },
+            "org": {
+              "constant_value": "ms"
+            },
+            "project": {
+              "constant_value": "corebuild-10022019"
+            },
+            "purpose": {
+              "constant_value": "bq"
+            },
+            "tnt_code": {
+              "constant_value": "adp"
+            }
+          },
+          "module": {
+            "outputs": {
+              "id": {
+                "expression": {
+                  "references": [
+                    "google_kms_key_ring.example_keyring"
+                  ]
+                },
+                "description": "ID to the key ring"
+              },
+              "location": {
+                "expression": {
+                  "references": [
+                    "google_kms_key_ring.example_keyring"
+                  ]
+                },
+                "description": "Location where the key ring is stored"
+              },
+              "ring_name": {
+                "expression": {
+                  "references": [
+                    "google_kms_key_ring.example_keyring"
+                  ]
+                },
+                "description": "Key ring name"
+              }
+            },
+            "resources": [
+              {
+                "address": "google_kms_key_ring.example_keyring",
+                "mode": "managed",
+                "type": "google_kms_key_ring",
+                "name": "example_keyring",
+                "provider_config_key": "sp171_violating_kms_keyring_test:google",
+                "expressions": {
+                  "location": {
+                    "references": [
+                      "var.key_ring_location"
+                    ]
+                  },
+                  "name": {
+                    "references": [
+                      "local.key_ring_name"
+                    ]
+                  },
+                  "project": {
+                    "references": [
+                      "var.project"
+                    ]
+                  }
+                },
+                "schema_version": 0
+              },
+              {
+                "address": "google_kms_key_ring_iam_member.ring_iam",
+                "mode": "managed",
+                "type": "google_kms_key_ring_iam_member",
+                "name": "ring_iam",
+                "provider_config_key": "sp171_violating_kms_keyring_test:google",
+                "expressions": {
+                  "key_ring_id": {
+                    "references": [
+                      "google_kms_key_ring.example_keyring"
+                    ]
+                  },
+                  "member": {
+                    "references": [
+                      "each.key"
+                    ]
+                  },
+                  "role": {
+                    "references": [
+                      "each.value"
+                    ]
+                  }
+                },
+                "schema_version": 0,
+                "for_each_expression": {
+                  "references": [
+                    "var.key_ring_iam"
+                  ]
+                }
+              }
+            ],
+            "variables": {
+              "classification": {
+                "description": "The classification (ex: config, phi)"
+              },
+              "env": {
+                "description": "The name of the environment (ex: n)"
+              },
+              "key_ring_iam": {
+                "default": {},
+                "description": "A map containing the IAM member (key) and role (value) for the key_ring"
+              },
+              "key_ring_location": {
+                "description": "The location of the key ring"
+              },
+              "org": {
+                "description": "The name of org (ex: ml)"
+              },
+              "project": {
+                "description": "The project id that will contain the KMS resources"
+              },
+              "purpose": {
+                "description": "The purpose of the key ring"
+              },
+              "tnt_code": {
+                "description": "The name of the tenant (ex: adp)"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

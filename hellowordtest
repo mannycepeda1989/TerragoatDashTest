@@ -1,8 +1,0 @@
-// the hello world program
-alert("Hello, World!");
-
-const username = "mannycepeda";
-const password = "password123456789";
-
-// display the sum
-console.log('My username is: ' + username + ' and my password is: ' + password);
